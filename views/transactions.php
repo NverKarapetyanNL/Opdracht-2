@@ -16,9 +16,7 @@ $filename = FILES_PATH . $_GET['file'];
 
 $transactions = getTransactions($filename);
 
-$transactions = getTransactions($filename);
-
-[$totalInkomsten, $totalKosten, $netTotal] = calculateTotals($transactions);
+[$totaleInkomsten, $totaleKosten, $nettoTotal] = calculateTotals($transactions);
 
 ?>
 
@@ -75,15 +73,15 @@ $transactions = getTransactions($filename);
         <tfoot>
         <tr>
             <th colspan="3">Totale Inkomsten:</th>
-            <td><?= formatAmount($totalInkomsten); ?></td>
+            <td><?= formatAmount($totaleInkomsten); ?></td>
         </tr>
         <tr>
             <th colspan="3">Totale Uitgaven:</th>
-            <td><?= formatAmount(-$totalKosten); ?></td>
+            <td><?= formatAmount(-$totaleKosten); ?></td>
         </tr>
         <tr>
             <th colspan="3">Netto totaal:</th>
-            <td><?= formatAmount($netTotal); ?></td>
+            <td><?= formatAmount($nettoTotal); ?></td>
         </tr>
         </tfoot>
     </table>
