@@ -16,6 +16,29 @@ $filename = FILES_PATH . $_GET['file'];
 
 $transactions = getTransactions($filename);
 
+function calculateTotalss(array $transactions): array
+{
+    $totaleInkomsten = 0;
+    $totaleKosten = 0;
+
+    foreach ($transactions as $transaction) {
+        if (isset($transaction['Bedrag'])) {
+            $amount = (float) $transaction['Bedrag'];
+        } else {
+            $amount = 0;
+        }
+
+        if ($amount > 0) {
+            $totaleInkomsten += $amount;
+        } else {
+            $totaleKosten += abs($amount);
+        }
+    }
+
+    $nettoTotal = $totaleInkomsten - $totaleKosten;
+    return [$totaleInkomsten, $totaleKosten, $nettoTotal];
+}
+
 function cleanAndStructureData(array $data): array
 {
     $structuredData = [];
@@ -42,7 +65,7 @@ function cleanAndStructureData(array $data): array
 
 $structuredTransactions = cleanAndStructureData($transactions);
 
-[$totaleInkomsten, $totaleKosten, $nettoTotal] = calculateTotals($structuredTransactions);
+[$totaleInkomsten, $totaleKosten, $nettoTotal] = calculateTotalss($structuredTransactions);
 
 ?>
 

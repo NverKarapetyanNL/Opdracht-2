@@ -59,28 +59,7 @@ function formatAmount(float $amount): string
     return sprintf('<span style="color: %s;">€%.2f</span>', $color, $amount);
 }
 
-function calculateTotals(array $transactions): array
-{
-    $totaleInkomsten = 0;
-    $totaleKosten = 0;
 
-    foreach ($transactions as $transaction) {
-        if (isset($transaction[3])) {
-            $amount = (float)$transaction[3];
-        } else {
-            $amount = 0;
-        }
-
-        if ($amount > 0) {
-            $totaleInkomsten += $amount;
-        } else {
-            $totaleKosten += abs($amount);
-        }
-    }
-
-    $nettoTotal = $totaleInkomsten - $totaleKosten;
-    return [$totaleInkomsten, $totaleKosten, $nettoTotal];
-}
 
 
 
