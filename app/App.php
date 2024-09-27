@@ -1,13 +1,6 @@
 <?php
 
 declare(strict_types=1);
-
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
-
-
 function getTransactions(string $filename): array
 {
     $transactions = [];
@@ -45,18 +38,17 @@ function formatDate($date): string
     // Check if the date is in the correct format
     if (count($dateParts) === 3) {
         $day = intval($dateParts[0]);
-        $monthKey = str_pad($dateParts[1], 2, '0', STR_PAD_LEFT); // Ensure month is two digits
+        $monthKey = str_pad($dateParts[1], 2, '0', STR_PAD_LEFT);
         $year = $dateParts[2];
 
-        // Check if the month exists in the array
         if (isset($months[$monthKey])) {
             return $day . ' ' . $months[$monthKey] . ' ' . $year;
         } else {
-            return 'Ongeldige maand'; // Handle invalid month
+            return 'Ongeldige maand';
         }
     }
 
-    return 'Ongeldig datum'; // Handle invalid date format
+    return 'Ongeldig datum';
 }
 
 

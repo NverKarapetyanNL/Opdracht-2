@@ -2,10 +2,6 @@
 
 declare(strict_types=1);
 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
 $root = 'C:\xampp\htdocs\Opdracht 2' . DIRECTORY_SEPARATOR;
 
 define('APP_PATH', $root . 'app' . DIRECTORY_SEPARATOR);
@@ -27,7 +23,6 @@ $files = getTransactionFiles(FILES_PATH);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Transactiebestanden</title>
-    <!-- Bootstrap voor mooie styling -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>

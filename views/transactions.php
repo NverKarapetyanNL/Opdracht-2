@@ -2,11 +2,6 @@
 
 declare(strict_types=1);
 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
-
 require_once 'C:\xampp\htdocs\Opdracht 2/app/App.php';
 $root = 'C:\xampp\htdocs\Opdracht 2' . DIRECTORY_SEPARATOR;
 
