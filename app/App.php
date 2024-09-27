@@ -1,6 +1,7 @@
 <?php
 
 declare(strict_types=1);
+
 function getTransactions(string $filename): array
 {
     $transactions = [];
@@ -52,7 +53,6 @@ function formatDate($date): string
     return 'Ongeldig datum';
 }
 
-
 function formatAmount(float $amount): string
 {
     $color = $amount < 0 ? 'red' : 'green';
@@ -81,5 +81,6 @@ function calculateTotals(array $transactions): array
     $nettoTotal = $totaleInkomsten - $totaleKosten;
     return [$totaleInkomsten, $totaleKosten, $nettoTotal];
 }
+
 
 

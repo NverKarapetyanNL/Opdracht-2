@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-require_once 'C:\xampp\htdocs\Opdracht 2/app/App.php';
+require 'C:\xampp\htdocs\Opdracht 2/app/App.php';
 $root = 'C:\xampp\htdocs\Opdracht 2' . DIRECTORY_SEPARATOR;
 
 define('FILES_PATH', $root . 'transaction_files' . DIRECTORY_SEPARATOR);
@@ -16,7 +16,33 @@ $filename = FILES_PATH . $_GET['file'];
 
 $transactions = getTransactions($filename);
 
-[$totaleInkomsten, $totaleKosten, $nettoTotal] = calculateTotals($transactions);
+function cleanAndStructureData(array $data): array
+{
+    $structuredData = [];
+
+    foreach ($data as $entry) {
+        $rawEntry = $entry[0];
+
+        $parts = preg_split('/\s+/', trim($rawEntry));
+
+        $date = $parts[0];
+        $transactionID = isset($parts[1]) ? $parts[1] : 'N/A';
+        $description = isset($parts[2]) ? $parts[2] : 'N/A';
+        $amountValue = end($parts);
+
+        $structuredData[] = [
+            'Datum' => $date,
+            'Check #' => $transactionID,
+            'Beschrijving' => $description,
+            'Bedrag' => $amountValue
+        ];
+    }
+    return $structuredData;
+}
+
+$structuredTransactions = cleanAndStructureData($transactions);
+
+[$totaleInkomsten, $totaleKosten, $nettoTotal] = calculateTotals($structuredTransactions);
 
 ?>
 
@@ -61,27 +87,29 @@ $transactions = getTransactions($filename);
         </tr>
         </thead>
         <tbody>
-        <?php foreach ($transactions as $transaction): ?>
+        <?php foreach ($structuredTransactions as $transaction): ?>
             <tr>
-                <td><?= !empty($transaction[0]) ? formatDate($transaction[0]) : 'N/A'; ?></td>
-                <td><?= !empty($transaction[1]) ? htmlspecialchars($transaction[1]) : 'N/A'; ?></td>
-                <td><?= !empty($transaction[2]) ? htmlspecialchars($transaction[2]) : 'Geen beschrijving'; ?></td>
-                <td><?= !empty($transaction[3]) ? formatAmount((float)$transaction[3]) : '0'; ?></td>
+                <td><?= formatDate($transaction['Datum']); ?></td>
+                <td><?= htmlspecialchars($transaction['Check #']); ?></td>
+                <td><?= htmlspecialchars($transaction['Beschrijving']); ?></td>
+                <td><?= formatAmount((float)$transaction['Bedrag']); ?></td>
             </tr>
         <?php endforeach; ?>
         </tbody>
         <tfoot>
         <tr>
             <th colspan="3">Totale Inkomsten:</th>
-            <td><?= formatAmount($totaleInkomsten); ?></td>
+            <td style="color: green;"><?= formatAmount($totaleInkomsten); ?></td>
         </tr>
         <tr>
             <th colspan="3">Totale Uitgaven:</th>
-            <td><?= formatAmount(-$totaleKosten); ?></td>
+            <td style="color: red;"><?= formatAmount(-$totaleKosten); ?></td>
         </tr>
         <tr>
-            <th colspan="3">Netto totaal:</th>
-            <td><?= formatAmount($nettoTotal); ?></td>
+            <th colspan="3">Netto Totaal:</th>
+            <td style="color: <?= $nettoTotal >= 0 ? 'green' : 'red'; ?>;">
+                <?= formatAmount($nettoTotal); ?>
+            </td>
         </tr>
         </tfoot>
     </table>
