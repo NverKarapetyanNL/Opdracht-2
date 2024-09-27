@@ -65,10 +65,10 @@ $transactions = getTransactions($filename);
         <tbody>
         <?php foreach ($transactions as $transaction): ?>
             <tr>
-                <td><?= formatDate($transaction[0] ?? ''); ?></td>
-                <td><?= htmlspecialchars($transaction[1] ?? ''); ?></td>
-                <td><?= htmlspecialchars($transaction[2] ?? ''); ?></td>
-                <td><?= formatAmount((float)($transaction[3] ?? 0)); ?></td>
+                <td><?= !empty($transaction[0]) ? formatDate($transaction[0]) : 'N/A'; ?></td>
+                <td><?= !empty($transaction[1]) ? htmlspecialchars($transaction[1]) : 'N/A'; ?></td>
+                <td><?= !empty($transaction[2]) ? htmlspecialchars($transaction[2]) : 'Geen beschrijving'; ?></td>
+                <td><?= !empty($transaction[3]) ? formatAmount((float)$transaction[3]) : '0'; ?></td>
             </tr>
         <?php endforeach; ?>
         </tbody>

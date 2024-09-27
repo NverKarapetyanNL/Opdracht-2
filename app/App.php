@@ -15,15 +15,17 @@ function getTransactions(string $filename): array
     }
 
     while (($data = fgetcsv($file, 1000, ',')) !== false) {
-        if (str_contains($data[0], 'datum')) {
-            continue;
-        }
+        $data = array_map(function ($value) {
+            return !empty($value) ? $value : 'N/A';
+        }, $data);
+
         $transactions[] = $data;
     }
 
     fclose($file);
     return $transactions;
 }
+
 
 function formatDate($date): string
 {
@@ -35,7 +37,6 @@ function formatDate($date): string
 
     $dateParts = explode('/', $date);
 
-    // Check if the date is in the correct format
     if (count($dateParts) === 3) {
         $day = intval($dateParts[0]);
         $monthKey = str_pad($dateParts[1], 2, '0', STR_PAD_LEFT);
