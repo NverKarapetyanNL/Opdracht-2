@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-require 'C:\xampp\htdocs\Opdracht 2/app/App.php';
-$root = 'C:\xampp\htdocs\Opdracht 2' . DIRECTORY_SEPARATOR;
+$root = dirname(__DIR__) . DIRECTORY_SEPARATOR;
+require $root.'app/App.php';
 
 define('FILES_PATH', $root . 'transaction_files' . DIRECTORY_SEPARATOR);
 

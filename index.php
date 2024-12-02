@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-$root = 'C:\xampp\htdocs\Opdracht 2' . DIRECTORY_SEPARATOR;
+$root = __DIR__. DIRECTORY_SEPARATOR;
 
 define('APP_PATH', $root . 'app' . DIRECTORY_SEPARATOR);
 define('FILES_PATH', $root . 'transaction_files' . DIRECTORY_SEPARATOR);
